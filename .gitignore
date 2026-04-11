@@ -1,2 +1,11 @@
 .venv
 .idea
+
+# SQLite
+db.sqlite3
+*.sqlite3
+*.db
+
+# PostgreSQL / MySQL dump files
+*.sql
+*.dump
