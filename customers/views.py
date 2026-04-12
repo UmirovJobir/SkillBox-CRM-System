@@ -1,22 +1,25 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Customer
 from .forms import CustomerForm
 
 
 @login_required
+@permission_required("customers.view_customer", raise_exception=True)
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, "customers/customers-list.html", {"customers": customers})
 
 
 @login_required
+@permission_required("customers.view_customer", raise_exception=True)
 def customer_detail(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     return render(request, "customers/customers-detail.html", {"object": customer})
 
 
 @login_required
+@permission_required("customers.add_customer", raise_exception=True)
 def customer_create(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)
@@ -29,6 +32,7 @@ def customer_create(request):
 
 
 @login_required
+@permission_required("customers.change_customer", raise_exception=True)
 def customer_edit(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == "POST":
@@ -42,6 +46,7 @@ def customer_edit(request, pk):
 
 
 @login_required
+@permission_required("customers.delete_customer", raise_exception=True)
 def customer_delete(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     if request.method == "POST":

@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Sum
 from .models import Advertisement
@@ -9,18 +9,21 @@ from contracts.models import Contract
 
 
 @login_required
+@permission_required("advertisements.view_advertisement", raise_exception=True)
 def advertisement_list(request):
     ads = Advertisement.objects.all()
     return render(request, "ads/ads-list.html", {"ads": ads})
 
 
 @login_required
+@permission_required("advertisements.view_advertisement", raise_exception=True)
 def advertisement_detail(request, pk):
     ad = get_object_or_404(Advertisement, pk=pk)
     return render(request, "ads/ads-detail.html", {"object": ad})
 
 
 @login_required
+@permission_required("advertisements.add_advertisement", raise_exception=True)
 def advertisement_create(request):
     if request.method == "POST":
         form = AdvertisementForm(request.POST)
@@ -33,6 +36,7 @@ def advertisement_create(request):
 
 
 @login_required
+@permission_required("advertisements.change_advertisement", raise_exception=True)
 def advertisement_edit(request, pk):
     ad = get_object_or_404(Advertisement, pk=pk)
     if request.method == "POST":
@@ -46,6 +50,7 @@ def advertisement_edit(request, pk):
 
 
 @login_required
+@permission_required("advertisements.delete_advertisement", raise_exception=True)
 def advertisement_delete(request, pk):
     ad = get_object_or_404(Advertisement, pk=pk)
     if request.method == "POST":
@@ -55,6 +60,7 @@ def advertisement_delete(request, pk):
 
 
 @login_required
+@permission_required("advertisements.view_advertisement", raise_exception=True)
 def advertisement_statistic(request):
     ads = Advertisement.objects.all()
     for ad in ads:

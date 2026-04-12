@@ -1,22 +1,25 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
 from .forms import ProductForm
 
 
 @login_required
+@permission_required("products.view_product", raise_exception=True)
 def product_list(request):
     products = Product.objects.all()
     return render(request, "products/products-list.html", {"products": products})
 
 
 @login_required
+@permission_required("products.view_product", raise_exception=True)
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     return render(request, "products/products-detail.html", {"object": product})
 
 
 @login_required
+@permission_required("products.add_product", raise_exception=True)
 def product_create(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
@@ -29,6 +32,7 @@ def product_create(request):
 
 
 @login_required
+@permission_required("products.change_product", raise_exception=True)
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
@@ -42,6 +46,7 @@ def product_edit(request, pk):
 
 
 @login_required
+@permission_required("products.delete_product", raise_exception=True)
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":

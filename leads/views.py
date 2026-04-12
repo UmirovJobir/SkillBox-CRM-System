@@ -1,22 +1,25 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Lead
 from .forms import LeadForm
 
 
 @login_required
+@permission_required("leads.view_lead", raise_exception=True)
 def lead_list(request):
     leads = Lead.objects.all()
     return render(request, "leads/leads-list.html", {"leads": leads})
 
 
 @login_required
+@permission_required("leads.view_lead", raise_exception=True)
 def lead_detail(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     return render(request, "leads/leads-detail.html", {"object": lead})
 
 
 @login_required
+@permission_required("leads.add_lead", raise_exception=True)
 def lead_create(request):
     if request.method == "POST":
         form = LeadForm(request.POST)
@@ -29,6 +32,7 @@ def lead_create(request):
 
 
 @login_required
+@permission_required("leads.change_lead", raise_exception=True)
 def lead_edit(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     if request.method == "POST":
@@ -42,6 +46,7 @@ def lead_edit(request, pk):
 
 
 @login_required
+@permission_required("leads.delete_lead", raise_exception=True)
 def lead_delete(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
     if request.method == "POST":
