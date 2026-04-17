@@ -36,7 +36,7 @@ CRM-система для отдела продаж. Позволяет:
 ## Структура проекта
 
 ```
-SkillBox-Task-CRM-System/
+SkillBox-CRM-System/
 ├── crm/                    # Настройки проекта (settings.py, urls.py)
 ├── products/               # Приложение: Услуги
 ├── advertisements/         # Приложение: Рекламные кампании
@@ -60,7 +60,7 @@ SkillBox-Task-CRM-System/
 
 ```bash
 git clone https://github.com/UmirovJobir/SkillBox-CRM-System.git
-cd SkillBox-Task-CRM-System
+cd SkillBox-CRM-System
 ```
 
 ### 2. Установить зависимости
